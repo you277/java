@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.lang.Thread;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         double d = 2.0;
         int definitelyCorrectValue = 4 / 3;
         int mult = definitelyCorrectValue * 3;
@@ -40,28 +40,59 @@ public class Main {
             return;
         }
 
+        // thing i might use later
+        for (int i = 0; i < 10; i++) {
+            System.out.println(Math.round(Math.random()*5));
+        }
+
+        int diceRollPrediction = -1;
+        while (diceRollPrediction == -1) {
+            int pick;
+            System.out.println("\nwhat will the dice roll on (1-6): ");
+            Scanner s2 = new Scanner(System.in);
+            try {
+                pick = s2.nextInt();
+                s2.close();
+                System.out.println(pick);
+                if (pick < 1 || pick > 6) {
+                    System.out.println("OUT OF RANGE!!!");
+                    continue;
+                }
+                diceRollPrediction = pick;
+            } catch (InputMismatchException e) {
+                s2.close();
+                System.out.println("NOT AN INT!!!!");
+                Thread.sleep(500);
+            }
+        }
+        System.out.println("ok ur pick is " + diceRollPrediction);
+
         try {
             System.out.println("\ngive me an int and im gonna divide mult (" + mult + ") by it: ");
-            int divisor;
+            double divisor;
+            s.close();
+            Scanner s2 = new Scanner(System.in);
             try {
-                divisor = s.nextInt();
+                divisor = s2.nextDouble();
             } catch (InputMismatchException e) {
                 System.out.println("NOT AN INT!!!!");
                 return;
             }
             s.close();
+            s2.close();
 
             System.out.println();
-            System.out.println(mult / divisor);
+            System.out.println((int)(mult / divisor));
             System.out.println("what da congerartion :tada:");
 
             while (true) {
-                try {
+                // nvm fixed it i added throws InterruptedException to the function header thing
+//                try {
                     // why does sleeping throw an InterruptedException?
                     Thread.sleep(1000);
-                } catch(InterruptedException e) {
+//                } catch(InterruptedException e) {
                     //
-                }
+//                }
                 System.out.println("hi");
             }
         } catch (ArithmeticException e) {
