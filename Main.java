@@ -5,19 +5,14 @@ public class Main {
         Scanner s = new Scanner(System.in);
 
         String option = "t";
-        boolean validOption = false;
-        while (validOption == false) {
+        while (!newOption.equals("y") && !newOption.equals("n")) {
             System.out.println("\ndo you want to do the thing (y/n):");
-            String newOption = s.nextLine();
-            if (newOption.equals("y") || newOption.equals("n")) {
-                option = newOption;
-                validOption = true;
-                break;
-            }
-            if (newOption.equals("y/n")) {
+            option = s.nextLine();
+            if (option.equals("y/n")) {
                 System.out.println("you think ur so funny");
             }
         }
+        s.close();
 
         if (option.equals("n")) {
             System.out.println("ok");
