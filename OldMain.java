@@ -43,7 +43,7 @@ public class OldMain {
             return;
         }
 
-        Die die = new Die();
+        Die die = new Die(6);
         die.setSides(6);
 
         // thing i might use later

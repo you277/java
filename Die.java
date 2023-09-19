@@ -1,5 +1,9 @@
 public class Die {
-    int sides;
+    private int sides;
+
+    public Die(int s) {
+        sides = s;
+    }
 
     public void setSides(int s) {
         sides = s;
