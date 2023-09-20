@@ -21,7 +21,7 @@ public class Main {
         Die die = new Die(6);
         int points = 0;
 
-        System.out.println("\nif i roll 12 you die");
+        System.out.println("\nif i roll 12 you die and lose all ur points");
 
         boolean doThing = true;
         while (doThing) {
