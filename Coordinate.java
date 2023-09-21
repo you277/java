@@ -1,6 +1,6 @@
 public class Coordinate {
-    int x;
-    int y;
+    private int x;
+    private int y;
 
     public Coordinate(int initX, int initY) {
         x = initX;

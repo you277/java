@@ -1,109 +1,59 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.lang.Thread;
 
 public class OldMain {
-    static int pick = 0;
-    static int divisor = 0;
-    static Scanner s2 = new Scanner(System.in);
-    public static void main(String[] args) throws InterruptedException {
-        double d = 2.0;
-        int definitelyCorrectValue = 4 / 3;
-        int mult = definitelyCorrectValue * 3;
-        double actuallyCorrectValue = 4.0 / 3;
-
-        mult += 2;
-        mult /= 3;
-        mult *= 4;
-        mult ^= 8;
-
-        System.out.println("things:");
-        System.out.println(definitelyCorrectValue);
-        System.out.println(actuallyCorrectValue);
-
-        System.out.println("\nother thing:");
-        System.out.println(mult + actuallyCorrectValue / definitelyCorrectValue % d);
-
+    public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        System.out.println("\ndo u want to do the thing (y/n): ");
-        String doThing = s.nextLine();
 
-        if (!doThing.equals("y") && !doThing.equals("n")) {
-            s.close();
-            if (doThing.equals("y/n")) {
-                System.out.println("u think ur so funny");
-            } else {
-                System.out.println("NOT VALID INPUT!!!");
+        String option = "t";
+        while (!option.equals("y") && !option.equals("n")) {
+            System.out.println("\ndo you want to do the thing (y/n):");
+            option = s.nextLine();
+            if (option.equals("y/n")) {
+                System.out.println("\nyou think ur so funny");
             }
-            return;
         }
-        if (doThing.equals("n")) {
+
+        if (option.equals("n")) {
             System.out.println("ok");
-            s.close();
             return;
         }
 
         Die die = new Die(6);
-        die.setSides(6);
+        int points = 0;
 
-        // thing i might use later
-        for (int i = 0; i < 10; i++) {
-            System.out.println(die.roll());
-        }
+        System.out.println("\nif i roll 12 you die and lose all ur points");
 
-        int diceRollPrediction = -1;
-        while (diceRollPrediction == -1) {
+        boolean doThing = true;
+        while (doThing) {
+            System.out.println("\ndo you want to roll (y/n) (points: " + points + "):");
+            String input = s.nextLine();
 
-            System.out.println("\nwhat will the dice roll on (1-6): ");
-            Scanner s2 = new Scanner(System.in);
-            try {
-                pick = s2.nextInt();
-                s2.close();
-                System.out.println(pick);
-                if (pick < 1 || pick > 6) {
-                    System.out.println("OUT OF RANGE!!!");
-                    continue;
+            if (input.equals("y")) {
+                int roll1 = die.roll();
+                int roll2 = die.roll();
+                System.out.println("rolls were " + roll1 + " and " + roll2);
+                if (roll1 + roll2 == 12) {
+                    doThing = false;
+                    System.out.println("HAHA I GOT 12 YOU DIE NOW!!!");
+                    System.out.println("-" + points + " POINTS LOL");
+                    points = 0;
+                } else {
+                    System.out.println("ok cool you get 1 point i guess");
+                    points += 1;
                 }
-                diceRollPrediction = pick;
-            } catch (InputMismatchException e) {
-                s2.close();
-                System.out.println("NOT AN INT!!!!");
-                Thread.sleep(500);
+
+            } else if (input.equals("n")) {
+                doThing = false;
+                System.out.println("ok");
+
+            } else if (input.equals("y/n")) {
+                System.out.println("STOP");
+
+            } else {
+                System.out.println("FOLLOW DIRECTIONS YOU FOOL...");
             }
         }
-        System.out.println("ok ur pick is " + diceRollPrediction);
-        s2 = new Scanner(System.in);
-        try {
-            System.out.println("\ngive me an int and im gonna divide mult (" + mult + ") by it: ");
 
-            s.close();
-            divisor = s2.nextInt();
-
-//            try {
-//                divisor = s2.nextInt();
-//            } catch (InputMismatchException e) {
-//                System.out.println("NOT AN INT!!!!");
-//                return;
-//            }
-            s.close();
-            s2.close();
-
-            System.out.println();
-            System.out.println((int)(mult / divisor));
-            System.out.println("what da congerartion :tada:");
-
-            while (true) {
-                // nvm fixed it i added throws InterruptedException to the function header thing
-//                try {
-                // why does sleeping throw an InterruptedException?
-                Thread.sleep(1000);
-//                } catch(InterruptedException e) {
-                //
-//                }
-                System.out.println("hi");
-            }
-        } catch (ArithmeticException e) {
-            System.out.println("it errored bruh why would you input 0");
-        }
+        System.out.println("\nfinal points: " + points);
     }
 }
