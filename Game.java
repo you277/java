@@ -58,22 +58,22 @@ public class Game {
             case "w":
                 System.out.println("move up");
                 player.setDirection("up");
-                arrowTile.setCharacter("🔼");
+                arrowTile.setCharacter("⬆️");
                 break;
             case "a":
                 System.out.println("move a");
                 player.setDirection("left");
-                arrowTile.setCharacter("◀ ");
+                arrowTile.setCharacter("⬅️");
                 break;
             case "s":
                 System.out.println("move s");
                 player.setDirection("down");
-                arrowTile.setCharacter("🔽");
+                arrowTile.setCharacter("⬆️");
                 break;
             case "d":
                 System.out.println("move right");
                 player.setDirection("right");
-                arrowTile.setCharacter("▶ ");
+                arrowTile.setCharacter("➡️");
                 break;
             case "1":
                 System.out.println("attack");
