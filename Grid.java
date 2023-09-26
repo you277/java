@@ -31,8 +31,8 @@ public class Grid {
 
     public String getGridArt(ArrayList tiles) {
         String art = "";
-        for (int x = centerX - left; x < centerX + right; x++) {
-            for (int y = centerX - left; y < centerX + right; y++) {
+        for (int y = centerY - top; y < centerY + bottom; y++) {
+            for (int x = centerX - left; x < centerX + right; x++) {
                 String tileChar = getTopTileCharacter(tiles, x, y);
                 art += tileChar;
             }

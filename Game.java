@@ -29,63 +29,47 @@ public class Game {
 
         switch (direction) {
             case "up":
-                System.out.println("step up");
                 y--;
                 arrowCoord.setCoordinates(x, y - 1);
                 break;
             case "left" :
-                System.out.println("step left");
                 x--;
                 arrowCoord.setCoordinates(x - 1, y);
                 break;
             case "down":
-                System.out.println("step down");
                 y++;
                 arrowCoord.setCoordinates(x, y + 1);
                 break;
             case "right":
-                System.out.println("step right");
                 x++;
-                arrowCoord.setCoordinates(x - 1, y);
+                arrowCoord.setCoordinates(x + 1, y);
         }
         coord.setCoordinates(x, y);
-        grid.setCenter(x, y);
-        render();
+        //grid.setCenter(x, y);
     }
 
     void processInput(String input) {
         switch (input) {
             case "w":
-                System.out.println("move up");
                 player.setDirection("up");
-                arrowTile.setCharacter("⬆️");
+                arrowTile.setCharacter("⏫");
                 break;
             case "a":
-                System.out.println("move a");
                 player.setDirection("left");
-                arrowTile.setCharacter("⬅️");
+                arrowTile.setCharacter("⏪");
                 break;
             case "s":
-                System.out.println("move s");
                 player.setDirection("down");
-                arrowTile.setCharacter("⬆️");
+                arrowTile.setCharacter("⏬");
                 break;
             case "d":
-                System.out.println("move right");
                 player.setDirection("right");
-                arrowTile.setCharacter("➡️");
+                arrowTile.setCharacter("⏩");
                 break;
             case "1":
                 System.out.println("attack");
                 // shoot
         }
-    }
-
-    void doLoop() {
-        System.out.println("change direction (wasd) or shoot (1): ");
-        String input = s.nextLine();
-        processInput(input);
-        step();
     }
 
     void doIntro() {
@@ -108,9 +92,11 @@ public class Game {
         s = new Scanner(System.in);
 
         doIntro();
-        render();
         while (active) {
-            doLoop();
+            render();
+            System.out.println("change direction (wasd) or shoot (1): ");
+            processInput(s.nextLine());
+            step();
         }
         onLose();
     }
