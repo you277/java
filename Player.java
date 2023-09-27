@@ -1,10 +1,36 @@
 public class Player {
-    private int ammo = 0;
-    private String direction = "up";
-    private Tile tile = new Tile("🟨");
+    private int ammo;
+    private String direction;
+    private final Tile tile;
+
+    public Player() {
+        tile = new Tile("🟨");
+        ammo = 0;
+        direction = "up";
+    }
 
     public void step() {
-        // do a turn
+        Coordinate coordinates = tile.getCoords();
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        switch (direction) {
+            case "up": {
+                y--;
+                break;
+            }
+            case "left" : {
+                x--;
+                break;
+            }
+            case "down": {
+                y++;
+                break;
+            }
+            case "right": {
+                x++;
+            }
+        }
+        coordinates.setCoordinates(x, y);
     }
 
     public void setDirection(String dir) {

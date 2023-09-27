@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Grid {
-    private String backgoundCharacter = "⬛";
+    private final String backgroundCharacter = "⬛";
     private int top = 10;
     private int bottom = 10;
     private int left = 10;
@@ -10,7 +10,7 @@ public class Grid {
     private int centerY = 0;
 
     private String getTopTileCharacter(ArrayList tiles, int posX, int posY) {
-        String currentChar = backgoundCharacter;
+        String currentChar = backgroundCharacter;
         int currentLayer = -1;
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = (Tile)tiles.get(i);
