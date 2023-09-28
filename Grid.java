@@ -1,19 +1,26 @@
 import java.util.ArrayList;
 
 public class Grid {
-    private final String backgroundCharacter = "⬛";
-    private int top = 10;
-    private int bottom = 10;
-    private int left = 10;
-    private int right = 10;
+    private final String backgroundCharacter;
+    private final int top;
+    private final int bottom;
+    private final int left;
+    private final int right;
     private int centerX = 0;
     private int centerY = 0;
 
-    private String getTopTileCharacter(ArrayList tiles, int posX, int posY) {
+    public Grid() {
+        backgroundCharacter = "⬛";
+        top = 10;
+        bottom = 10;
+        left = 10;
+        right = 10;
+    }
+
+    private String getTopTileCharacter(ArrayList<Tile> tiles, int posX, int posY) {
         String currentChar = backgroundCharacter;
         int currentLayer = -1;
-        for (int i = 0; i < tiles.size(); i++) {
-            Tile tile = (Tile)tiles.get(i);
+        for (Tile tile: tiles) {
             Coordinate coords = tile.getCoords();
             int x = coords.getX();
             int y = coords.getY();
@@ -29,7 +36,7 @@ public class Grid {
         return currentChar;
     }
 
-    public String getGridArt(ArrayList tiles) {
+    public String getGridArt(ArrayList<Tile> tiles) {
         String art = "";
         for (int y = centerY - top; y < centerY + bottom; y++) {
             for (int x = centerX - left; x < centerX + right; x++) {

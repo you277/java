@@ -2,20 +2,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 public class Game {
     private Player player;
-    private ArrayList enemies;
-    private ArrayList projectiles;
+    private ArrayList<Enemy> enemies;
+    private ArrayList<Projectile> projectiles;
     private Grid grid;
     private boolean active;
     private Scanner s;
 
     void render() {
-        ArrayList tiles = new ArrayList<Tile>();
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy enemy = (Enemy)enemies.get(i);
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (Enemy enemy: enemies) {
             tiles.add(enemy.getTile());
         }
-        for (int i = 0; i < projectiles.size(); i++) {
-            Projectile projectile = (Projectile)projectiles.get(i);
+        for (Projectile projectile: projectiles) {
             tiles.add(projectile.getTile());
         }
         tiles.add(player.getTile());
@@ -26,20 +24,25 @@ public class Game {
         // nothing yet
     }
     void stepProjectiles() {
-        for (int i = 0; i < projectiles.size(); i++) {
-            Projectile projectile = (Projectile)projectiles.get(i);
+        ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+        for (Projectile projectile: projectiles) {
             if (projectile.getLife() == 0) {
-                projectiles.remove(projectile);
+                projectilesToRemove.add(projectile);
                 continue;
             }
             projectile.step();
+        }
+        if (projectilesToRemove.size() != 0) {
+            for (Projectile projectile: projectilesToRemove) {
+                projectiles.remove(projectile);
+            }
         }
     }
 
     void step() {
         stepEnemies();
         stepProjectiles();
-        player.step();
+        player.step(enemies);
     }
 
     void pointArrow() {
@@ -92,12 +95,15 @@ public class Game {
     }
 
     void doIntro() {
-        System.out.println("\n"
-                + "                         _    ____  \n"
-                + "  ___ ____ ___ _  ___   (_)__/ / /__\n"
-                + " / _ `/ _ `/  ' \\/ -_) / / _  /  '_/\n"
-                + " \\_, /\\_,_/_/_/_/\\__/ /_/\\_,_/_/\\_\\ \n"
-                + "/___/                               \n"
+        System.out.println(
+                """
+
+                                         _    ____ \s
+                  ___ ____ ___ _  ___   (_)__/ / /__
+                 / _ `/ _ `/  ' \\/ -_) / / _  /  '_/
+                 \\_, /\\_,_/_/_/_/\\__/ /_/\\_,_/_/\\_\\\s
+                /___/                              \s
+                """
         );
 
         System.out.println("any input to begin");
@@ -114,8 +120,8 @@ public class Game {
 
         player = new Player();
         grid = new Grid();
-        enemies = new ArrayList<Enemy>();
-        projectiles = new ArrayList<Projectile>();
+        enemies = new ArrayList<>();
+        projectiles = new ArrayList<>();
         s = new Scanner(System.in);
 
         doIntro();
@@ -126,7 +132,7 @@ public class Game {
             step();
             pointArrow();
         }
-        active = false;
+        render();
         onLose();
     }
 }

@@ -1,15 +1,19 @@
+import java.util.ArrayList;
+
 public class Player {
     private int ammo;
     private String direction;
     private final Tile tile;
+    private boolean alive;
 
     public Player() {
         tile = new Tile("🟨");
         ammo = 0;
         direction = "up";
+        alive = true;
     }
 
-    public void step() {
+    public void step(ArrayList enemies) {
         Coordinate coordinates = tile.getCoords();
         int x = coordinates.getX();
         int y = coordinates.getY();
@@ -46,6 +50,10 @@ public class Player {
 
     public void addAmmo(int amt) {
         ammo += amt;
+    }
+
+    public boolean getAlive() {
+        return alive;
     }
 
     public Tile getTile() {
