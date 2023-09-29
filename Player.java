@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
 public class Player {
-    private int ammo;
+    //private int ammo;
     private String direction;
     private final Tile tile;
-    private boolean alive;
+    //private boolean alive;
 
     public Player() {
         tile = new Tile("🟨");
-        ammo = 0;
+        //ammo = 0;
         direction = "up";
-        alive = true;
+        //alive = true;
     }
 
-    public void step(Grid grid) {
+    public void step() {
         Coordinate coordinates = tile.getCoords();
         int x = coordinates.getX();
         int y = coordinates.getY();
@@ -35,7 +35,6 @@ public class Player {
             }
         }
         coordinates.setCoordinates(x, y);
-        //grid.setCenter(x, y);
     }
 
     public void setDirection(String dir) {
@@ -45,17 +44,17 @@ public class Player {
         return direction;
     }
 
-    public int getAmmo() {
-        return ammo;
-    }
-
-    public void addAmmo(int amt) {
-        ammo += amt;
-    }
-
-    public boolean getAlive() {
-        return alive;
-    }
+//    public int getAmmo() {
+//        return ammo;
+//    }
+//
+//    public void addAmmo(int amt) {
+//        ammo += amt;
+//    }
+//
+//    public boolean getAlive() {
+//        return alive;
+//    }
 
     public Tile getTile() {
         return tile;

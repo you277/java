@@ -120,7 +120,7 @@ public class Game {
     void step() {
         stepProjectiles();
         processProjectileCollisions();
-        player.step(grid);
+        player.step();
         stepEnemies();
         processPlayerCollisions();
         spawnEnemies();
