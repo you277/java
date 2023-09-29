@@ -14,6 +14,8 @@ public class Player {
     }
 
     public void step() {
+        // add bounds to the position and make it so that if they go out of bounds
+        // they reappear on the opposite wall
         Coordinate coordinates = tile.getCoords();
         int x = coordinates.getX();
         int y = coordinates.getY();
