@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 public class Game {
     private Player player;
     private ArrayList<Enemy> enemies;
     private ArrayList<Projectile> projectiles;
     private Grid grid;
-    private boolean active;
+    private boolean alive;
+    private int currentStep;
+    private int spawnPeriod; // how many steps it takes for another enemy to spawn
     private Scanner s;
 
     void render() {
@@ -16,12 +19,19 @@ public class Game {
         for (Projectile projectile: projectiles) {
             tiles.add(projectile.getTile());
         }
-        tiles.add(player.getTile());
+        if (alive) {
+            tiles.add(player.getTile());
+        }
         System.out.println(grid.getGridArt(tiles));
     }
 
     void stepEnemies() {
-        // nothing yet
+        Coordinate playerCoordinates = player.getTile().getCoords();
+        int x = playerCoordinates.getX();
+        int y = playerCoordinates.getY();
+        for (Enemy enemy: enemies) {
+            enemy.step(enemies, x, y);
+        }
     }
     void stepProjectiles() {
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
@@ -39,10 +49,82 @@ public class Game {
         }
     }
 
+    void processProjectileCollisions() {
+        if (projectiles.size() == 0 || enemies.size() == 0) {
+            return;
+        }
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+        ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+        for (Projectile projectile: projectiles) {
+            Coordinate projectileCoordinates = projectile.getTile().getCoords();
+            int x = projectileCoordinates.getX();
+            int y = projectileCoordinates.getY();
+            for (Enemy enemy: enemies) {
+                Coordinate enemyCoordinates = enemy.getTile().getCoords();
+                if (enemyCoordinates.getX() == x && enemyCoordinates.getY() == y) {
+                    enemiesToRemove.add(enemy);
+                    projectilesToRemove.add(projectile);
+                }
+            }
+        }
+        if (enemiesToRemove.size() == 0) {
+            return;
+        }
+        for (Projectile projectile: projectilesToRemove) {
+            projectiles.remove(projectile);
+        }
+        for (Enemy enemy: enemiesToRemove) {
+            enemies.remove(enemy);
+        }
+    }
+
+    void processPlayerCollisions() {
+        Coordinate playerCoordinates = player.getTile().getCoords();
+        int x = playerCoordinates.getX();
+        int y = playerCoordinates.getY();
+        for (Enemy enemy: enemies) {
+            Coordinate enemyCoordinates = enemy.getTile().getCoords();
+            if (enemyCoordinates.getX() == x && enemyCoordinates.getY() == y) {
+                alive = false;
+                break;
+            }
+        }
+    }
+
+    void spawnEnemies() {
+        if (currentStep % spawnPeriod != 0) {
+            return;
+        }
+        Random rand = new Random();
+
+        Coordinate playerCoordinates = player.getTile().getCoords();
+        int x = playerCoordinates.getX();
+        int y = playerCoordinates.getY();
+
+        int xOffset = rand.nextInt(3, 10);
+        int yOffset = rand.nextInt(3, 10);
+        if (rand.nextInt(0, 1) == 0) {
+            xOffset *= -1;
+        }
+        if (rand.nextInt(0, 1) == 0) {
+            yOffset *= -1;
+        }
+
+        Enemy enemy = new Enemy(
+                x + xOffset,
+                y + yOffset
+        );
+        enemies.add(enemy);
+    }
+
     void step() {
-        stepEnemies();
         stepProjectiles();
-        player.step(enemies);
+        processProjectileCollisions();
+        player.step(grid);
+        stepEnemies();
+        processPlayerCollisions();
+        spawnEnemies();
+        currentStep++;
     }
 
     void pointArrow() {
@@ -115,17 +197,19 @@ public class Game {
     }
 
     public void start() {
-        if (active) { return; }
-        active = true;
+        if (alive) { return; }
+        alive = true;
 
         player = new Player();
         grid = new Grid();
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
+        currentStep = 0;
+        spawnPeriod = 3;
         s = new Scanner(System.in);
 
         doIntro();
-        while (active) {
+        while (alive) {
             render();
             System.out.println("change direction (wasd) or shoot (1): ");
             processInput(s.nextLine());

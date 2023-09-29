@@ -13,7 +13,7 @@ public class Player {
         alive = true;
     }
 
-    public void step(ArrayList enemies) {
+    public void step(Grid grid) {
         Coordinate coordinates = tile.getCoords();
         int x = coordinates.getX();
         int y = coordinates.getY();
@@ -35,6 +35,7 @@ public class Player {
             }
         }
         coordinates.setCoordinates(x, y);
+        //grid.setCenter(x, y);
     }
 
     public void setDirection(String dir) {
