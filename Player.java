@@ -14,9 +14,9 @@ public class Player {
     }
 
     public void setBounds(int lowerX, int upperX, int lowerY, int upperY) {
-        lowerXBound = lowerX + 1; // lower bound is weird
+        lowerXBound = lowerX; // lower bound is weird
         upperXBound = upperX;
-        lowerYBound = lowerY + 1;
+        lowerYBound = lowerY;
         upperYBound = upperY;
     }
 
