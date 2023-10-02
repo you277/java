@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 public class Game {
-    private Player player;
+    private Player player = null;
     private ArrayList<Enemy> enemies;
     private ArrayList<Projectile> projectiles;
-    private Grid grid;
+    private Grid grid = null;
     private boolean alive;
     private int currentStep;
     private int spawnPeriod; // how many steps it takes for another enemy to spawn
@@ -23,6 +23,8 @@ public class Game {
             tiles.add(player.getTile());
         }
         System.out.println(grid.getGridArt(tiles));
+        System.out.println("score: " + currentStep);
+        System.out.println("enemies: " + enemies.size());
     }
 
     void stepEnemies() {
@@ -171,12 +173,13 @@ public class Game {
             case "1": {
                 Coordinate playerCoordinate = player.getTile().getCoords();
                 Projectile projectile = new Projectile(playerCoordinate.getX(), playerCoordinate.getY(), player.getDirection());
+                projectile.setBounds(-10, 10, -10, 10);
                 projectiles.add(projectile);
             }
         }
     }
 
-    void doIntro() {
+    boolean doIntro() {
         System.out.println(
                 """
 
@@ -188,17 +191,39 @@ public class Game {
                 """
         );
 
-        System.out.println("any input to begin");
-        s.nextLine();
+        String input;
+        while (true) {
+            System.out.println("\nbegin (y/n)");
+            input = s.nextLine();
+            if (input.equals("y") || input.equals("n")) {
+                break;
+            } else {
+                if (input.equals("y/n")) {
+                    System.out.println("oh you think ur so funny");
+                } else {
+                    System.out.println("you FOOL provide CORRECT input or you will...");
+                }
+            }
+        }
+        return input.equals("y");
     }
 
     void onLose() {
         System.out.println("womp womp");
+        System.out.println("final score: " + currentStep);
     }
 
     public void start() {
         if (alive) { return; }
         alive = true;
+
+        s = new Scanner(System.in);
+        boolean startGame = doIntro();
+        if (!startGame) {
+            alive = false;
+            System.out.println("ok bye");
+            return;
+        }
 
         player = new Player();
         grid = new Grid();
@@ -206,9 +231,9 @@ public class Game {
         projectiles = new ArrayList<>();
         currentStep = 0;
         spawnPeriod = 3;
-        s = new Scanner(System.in);
 
-        doIntro();
+        player.setBounds(-10, 10, -10, 10);
+
         while (alive) {
             render();
             System.out.println("change direction (wasd) or shoot (1): ");

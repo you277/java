@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Grid {
-    private final String backgroundCharacter;
+    private String backgroundCharacter = null;
     private final int top;
     private final int bottom;
     private final int left;

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy {
-    private final Tile tile;
+    private Tile tile = null;
 
     public Enemy(int x, int y) {
         tile = new Tile("🟥");
@@ -28,14 +28,13 @@ public class Enemy {
             newY--;
         }
 
-        int[] xPositions = { newX, x, newX };
-        int[] yPositions = { newY, newY, y };
+        int[] xPositions = {  x, newX };
+        int[] yPositions = { newY, y };
 
         ArrayList<Integer> allowedMoves = new ArrayList<>();
         ArrayList<Integer> moves = new ArrayList<>();
         moves.add(0);
         moves.add(1);
-        moves.add(2);
 
         for (Enemy otherEnemy: otherEnemies) {
             if (otherEnemy == this) {

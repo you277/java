@@ -1,7 +1,11 @@
 public class Projectile {
-    private final Tile tile;
-    private final String direction;
+    private Tile tile = null;
+    private String direction = null;
     private int life;
+    private int lowerXBound;
+    private int upperXBound;
+    private int lowerYBound;
+    private int upperYBound;
 
     public Projectile(int x, int y, String direct) {
         tile = new Tile("⬜");
@@ -10,6 +14,13 @@ public class Projectile {
 
         Coordinate coordinates = tile.getCoords();
         coordinates.setCoordinates(x, y);
+    }
+
+    public void setBounds(int lowerX, int upperX, int lowerY, int upperY) {
+        lowerXBound = lowerX;
+        upperXBound = upperX;
+        lowerYBound = lowerY;
+        upperYBound = upperY;
     }
 
     public void step() {
@@ -32,6 +43,16 @@ public class Projectile {
             case "right": {
                 x += 2;
             }
+        }
+        if (x >= upperXBound) {
+            x = lowerXBound + (x - upperXBound);
+        } else if (lowerXBound >= x) {
+            x = upperXBound + (x - lowerXBound);
+        }
+        if (y >= upperYBound) {
+            y = lowerYBound + (y - upperYBound);
+        } else if (lowerYBound >= y) {
+            y = upperYBound + (y - lowerYBound);
         }
         coordinates.setCoordinates(x, y);
         life--;
