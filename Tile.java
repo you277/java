@@ -1,10 +1,11 @@
 public class Tile {
-    private Coordinate coordinate = new Coordinate();
+    private final Coordinate coordinate;
     private int layer = 0;
     private String character;
 
     public Tile(String tileChar) {
         character = tileChar;
+        coordinate = new Coordinate();
     }
 
     public Coordinate getCoords() {
@@ -23,7 +24,10 @@ public class Tile {
         character = tileChar;
     }
 
-    public String getCharacter() {
+//    public String getCharacter() {
+//        return character;
+//    }
+    public String toString() {
         return character;
     }
 }

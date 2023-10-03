@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Enemy {
     private Tile tile = null;
@@ -56,8 +55,7 @@ public class Enemy {
         if (allowedMoves.size() == 1) {
             enemyCoordinates.setCoordinates(xPositions[0], yPositions[0]);
         } else {
-            Random rand = new Random();
-            int moveIdx = rand.nextInt(0, allowedMoves.size() - 1);
+            int moveIdx = (int)Math.round(Math.random()*(allowedMoves.size() - 1));
             moveIdx = allowedMoves.get(moveIdx);
             enemyCoordinates.setCoordinates(xPositions[moveIdx], yPositions[moveIdx]);
         }

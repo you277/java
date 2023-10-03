@@ -1,47 +1,57 @@
 import java.util.ArrayList;
 
 public class Grid {
-    private String backgroundCharacter = null;
+    private Tile backgroundTile = null;
     private final int top;
     private final int bottom;
     private final int left;
     private final int right;
     private int centerX = 0;
     private int centerY = 0;
+    private static boolean respectSetCenter;
+
+    static void setRespectCenter(boolean yeah) {
+        respectSetCenter = yeah;
+    }
 
     public Grid() {
-        backgroundCharacter = "⬛";
+        backgroundTile = new Tile("⬛");
+        backgroundTile.setLayer(-1);
         top = 10;
         bottom = 10;
         left = 10;
         right = 10;
     }
 
-    private String getTopTileCharacter(ArrayList<Tile> tiles, int posX, int posY) {
-        String currentChar = backgroundCharacter;
-        int currentLayer = -1;
+    private Tile getTopTileCharacter(ArrayList<Tile> tiles, int posX, int posY) {
+        Tile currentTile = backgroundTile;
         for (Tile tile: tiles) {
-            Coordinate coords = tile.getCoords();
-            int x = coords.getX();
-            int y = coords.getY();
+            Coordinate tileCoordinates = tile.getCoords();
+            int x = tileCoordinates.getX();
+            int y = tileCoordinates.getY();
             if (posX != x || posY != y) {
                 continue;
             }
             int layer = tile.getLayer();
-            if (layer > currentLayer) {
-                currentLayer = layer;
-                currentChar = tile.getCharacter();
+            if (layer > backgroundTile.getLayer()) {
+                currentTile = tile;
             }
         }
-        return currentChar;
+        return currentTile;
     }
 
     public String getGridArt(ArrayList<Tile> tiles) {
         String art = "";
-        for (int y = centerY - top; y < centerY + bottom; y++) {
-            for (int x = centerX - left; x < centerX + right; x++) {
-                String tileChar = getTopTileCharacter(tiles, x, y);
-                art += tileChar;
+        int trueCenterX = 0;
+        int trueCenterY = 0;
+        if (respectSetCenter) {
+            trueCenterX = centerX;
+            trueCenterY = centerY;
+        }
+        for (int y = trueCenterY - top; y < trueCenterY + bottom; y++) {
+            for (int x = trueCenterX - left; x < trueCenterX + right; x++) {
+                Tile tile = getTopTileCharacter(tiles, x, y);
+                art += tile;
             }
             art += "\n";
         }

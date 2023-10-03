@@ -8,7 +8,9 @@ public class Game {
     private Grid grid = null;
     private boolean alive;
     private int currentStep;
-    private int spawnPeriod; // how many steps it takes for another enemy to spawn
+    private boolean scoreExceededIntmax;
+    private int enemySpawnPeriod; // how many steps it takes for another enemy to spawn
+    private int enemyMovePeriod; // how many steps it takes for enemies to move
     private Scanner s;
 
     void render() {
@@ -23,11 +25,18 @@ public class Game {
             tiles.add(player.getTile());
         }
         System.out.println(grid.getGridArt(tiles));
-        System.out.println("score: " + currentStep);
+        if (scoreExceededIntmax) {
+            System.out.println("score: bruh");
+        } else {
+            System.out.println("score: " + currentStep);
+        }
         System.out.println("enemies: " + enemies.size());
     }
 
     void stepEnemies() {
+        if (currentStep % enemyMovePeriod != 0) {
+            return;
+        }
         Coordinate playerCoordinates = player.getTile().getCoords();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
@@ -94,21 +103,20 @@ public class Game {
     }
 
     void spawnEnemies() {
-        if (currentStep % spawnPeriod != 0) {
+        if (currentStep % enemySpawnPeriod != 0) {
             return;
         }
-        Random rand = new Random();
 
         Coordinate playerCoordinates = player.getTile().getCoords();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
 
-        int xOffset = rand.nextInt(3, 10);
-        int yOffset = rand.nextInt(3, 10);
-        if (rand.nextInt(0, 1) == 0) {
+        int xOffset = 3 +(int)Math.round(Math.random()*7);
+        int yOffset = 3 + (int)Math.round(Math.random()*7);
+        if (Math.random() > 0.5) {
             xOffset *= -1;
         }
-        if (rand.nextInt(0, 1) == 0) {
+        if (Math.random() > 0.5) {
             yOffset *= -1;
         }
 
@@ -126,6 +134,9 @@ public class Game {
         stepEnemies();
         processPlayerCollisions();
         spawnEnemies();
+        if (currentStep == Integer.MAX_VALUE) { // should never happen but whatever
+            scoreExceededIntmax = true;
+        }
         currentStep++;
     }
 
@@ -230,8 +241,10 @@ public class Game {
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
         currentStep = 0;
-        spawnPeriod = 3;
+        enemySpawnPeriod = 3;
+        enemyMovePeriod = 2;
 
+        Grid.setRespectCenter(false);
         player.setBounds(-10, 10, -10, 10);
 
         while (alive) {
