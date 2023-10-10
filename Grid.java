@@ -48,8 +48,8 @@ public class Grid {
             trueCenterX = centerX;
             trueCenterY = centerY;
         }
-        for (int y = trueCenterY - top; y < trueCenterY + bottom; y++) {
-            for (int x = trueCenterX - left; x < trueCenterX + right; x++) {
+        for (int y = trueCenterY - top; y < trueCenterY + bottom + 1; y++) {
+            for (int x = trueCenterX - left; x < trueCenterX + right + 1; x++) {
                 Tile tile = getTopTileCharacter(tiles, x, y);
                 art += tile;
             }

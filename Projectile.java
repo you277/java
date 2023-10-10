@@ -44,14 +44,14 @@ public class Projectile {
                 x += 2;
             }
         }
-        if (x >= upperXBound) {
+        if (x > upperXBound) {
             x = lowerXBound + (x - upperXBound);
-        } else if (lowerXBound >= x) {
+        } else if (lowerXBound > x) {
             x = upperXBound + (x - lowerXBound);
         }
-        if (y >= upperYBound) {
+        if (y > upperYBound) {
             y = lowerYBound + (y - upperYBound);
-        } else if (lowerYBound >= y) {
+        } else if (lowerYBound > y) {
             y = upperYBound + (y - lowerYBound);
         }
         coordinates.setCoordinates(x, y);

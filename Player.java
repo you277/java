@@ -41,14 +41,14 @@ public class Player {
                 x++;
             }
         }
-        if (x >= upperYBound) {
+        if (x > upperYBound) {
             x = lowerXBound;
-        } else if (lowerXBound >= x) {
+        } else if (lowerXBound > x) {
             x = upperXBound;
         }
-        if (y >= upperYBound) {
+        if (y > upperYBound) {
             y = lowerYBound;
-        } else if (lowerYBound >= y) {
+        } else if (lowerYBound > y) {
             y = upperYBound;
         }
         coordinates.setCoordinates(x, y);
