@@ -24,9 +24,6 @@ public class Tile {
         character = tileChar;
     }
 
-//    public String getCharacter() {
-//        return character;
-//    }
     public String toString() {
         return character;
     }

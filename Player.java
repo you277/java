@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Player {
     private String direction = null;
     private Tile tile = null;
@@ -60,18 +58,6 @@ public class Player {
     public String getDirection() {
         return direction;
     }
-
-//    public int getAmmo() {
-//        return ammo;
-//    }
-//
-//    public void addAmmo(int amt) {
-//        ammo += amt;
-//    }
-//
-//    public boolean getAlive() {
-//        return alive;
-//    }
 
     public Tile getTile() {
         return tile;

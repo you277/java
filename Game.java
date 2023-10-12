@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 public class Game {
     private Player player = null;
@@ -8,10 +7,11 @@ public class Game {
     private Grid grid = null;
     private boolean alive;
     private int currentStep;
-    private boolean scoreExceededIntmax;
+    private int score;
+    private boolean scoreExceededIntMax;
     private int enemySpawnPeriod; // how many steps it takes for another enemy to spawn
     private int enemyMovePeriod; // how many steps it takes for enemies to move
-    private Scanner s;
+    private final Scanner s;
 
     void render() {
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -25,10 +25,10 @@ public class Game {
             tiles.add(player.getTile());
         }
         System.out.println(grid.getGridArt(tiles));
-        if (scoreExceededIntmax) {
+        if (scoreExceededIntMax) {
             System.out.println("score: bruh");
         } else {
-            System.out.println("score: " + currentStep);
+            System.out.println("score: " + score);
         }
         System.out.println("enemies: " + enemies.size());
     }
@@ -75,6 +75,7 @@ public class Game {
                 if (enemyCoordinates.getX() == x && enemyCoordinates.getY() == y) {
                     enemiesToRemove.add(enemy);
                     projectilesToRemove.add(projectile);
+                    score += 2;
                 }
             }
         }
@@ -134,10 +135,11 @@ public class Game {
         stepEnemies();
         processPlayerCollisions();
         spawnEnemies();
-        if (currentStep == Integer.MAX_VALUE) { // should never happen but whatever
-            scoreExceededIntmax = true;
+        if (score == Integer.MAX_VALUE) { // should never happen but whatever
+            scoreExceededIntMax = true;
         }
         currentStep++;
+        score++;
     }
 
     void pointArrow() {
@@ -232,17 +234,9 @@ public class Game {
         System.out.println("final score: " + currentStep);
     }
 
-    public void start() {
+    public void doGame() {
         if (alive) { return; }
         alive = true;
-
-        s = new Scanner(System.in);
-        boolean startGame = doIntro();
-        if (!startGame) {
-            alive = false;
-            System.out.println("ok bye");
-            return;
-        }
 
         player = new Player();
         grid = new Grid();
@@ -264,5 +258,40 @@ public class Game {
         }
         render();
         onLose();
+    }
+
+    boolean getRestartInput() {
+        while (true) {
+            System.out.println("\nplay again? (y/n)");
+            String input = s.nextLine();
+            if (input.equals("y")) {
+                return true;
+            } else if (input.equals("n")){
+                return false;
+            } else {
+                System.out.println("you fool.");
+            }
+        }
+    }
+
+    public void start() {
+        boolean startGame = doIntro();
+        if (!startGame) {
+            alive = false;
+            System.out.println("ok bye");
+            return;
+        }
+        doGame();
+        while (true) {
+            if (getRestartInput()) {
+                doGame();
+            } else {
+                break;
+            }
+        }
+    }
+
+    public Game() {
+        s = new Scanner(System.in);
     }
 }
