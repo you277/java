@@ -37,7 +37,7 @@ public class Game {
         if (currentStep % enemyMovePeriod != 0) {
             return;
         }
-        Coordinate playerCoordinates = player.getTile().getCoords();
+        Coordinate playerCoordinates = player.getTile().getCoordinates();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
         for (Enemy enemy: enemies) {
@@ -67,11 +67,11 @@ public class Game {
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for (Projectile projectile: projectiles) {
-            Coordinate projectileCoordinates = projectile.getTile().getCoords();
+            Coordinate projectileCoordinates = projectile.getTile().getCoordinates();
             int x = projectileCoordinates.getX();
             int y = projectileCoordinates.getY();
             for (Enemy enemy: enemies) {
-                Coordinate enemyCoordinates = enemy.getTile().getCoords();
+                Coordinate enemyCoordinates = enemy.getTile().getCoordinates();
                 if (enemyCoordinates.getX() == x && enemyCoordinates.getY() == y) {
                     enemiesToRemove.add(enemy);
                     projectilesToRemove.add(projectile);
@@ -91,11 +91,11 @@ public class Game {
     }
 
     void processPlayerCollisions() {
-        Coordinate playerCoordinates = player.getTile().getCoords();
+        Coordinate playerCoordinates = player.getTile().getCoordinates();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
         for (Enemy enemy: enemies) {
-            Coordinate enemyCoordinates = enemy.getTile().getCoords();
+            Coordinate enemyCoordinates = enemy.getTile().getCoordinates();
             if (enemyCoordinates.getX() == x && enemyCoordinates.getY() == y) {
                 alive = false;
                 break;
@@ -108,7 +108,7 @@ public class Game {
             return;
         }
 
-        Coordinate playerCoordinates = player.getTile().getCoords();
+        Coordinate playerCoordinates = player.getTile().getCoordinates();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
 
@@ -147,44 +147,21 @@ public class Game {
         Tile playerTile = player.getTile();
 
         switch (direction) {
-            case "up": {
-                playerTile.setCharacter("⏫");
-                break;
-            }
-            case "left" : {
-                playerTile.setCharacter("⏪");
-                break;
-            }
-            case "down": {
-                playerTile.setCharacter("⏬");
-                break;
-            }
-            case "right": {
-                playerTile.setCharacter("⏩");
-            }
+            case "up" -> playerTile.setCharacter("⏫");
+            case "left" -> playerTile.setCharacter("⏪");
+            case "down" -> playerTile.setCharacter("⏬");
+            case "right" -> playerTile.setCharacter("⏩");
         }
     }
 
     void processInput(String input) {
         switch (input) {
-            case "w": {
-                player.setDirection("up");
-                break;
-            }
-            case "a": {
-                player.setDirection("left");
-                break;
-            }
-            case "s": {
-                player.setDirection("down");
-                break;
-            }
-            case "d": {
-                player.setDirection("right");
-                break;
-            }
-            case "1": {
-                Coordinate playerCoordinate = player.getTile().getCoords();
+            case "w" -> player.setDirection("up");
+            case "a" -> player.setDirection("left");
+            case "s" -> player.setDirection("down");
+            case "d" -> player.setDirection("right");
+            case "1" -> {
+                Coordinate playerCoordinate = player.getTile().getCoordinates();
                 Projectile projectile = new Projectile(playerCoordinate.getX(), playerCoordinate.getY(), player.getDirection());
                 projectile.setBounds(-10, 10, -10, 10);
                 projectiles.add(projectile);
@@ -231,7 +208,7 @@ public class Game {
 
     void onLose() {
         System.out.println("womp womp");
-        System.out.println("final score: " + currentStep);
+        System.out.println("final score: " + score);
     }
 
     public void doGame() {

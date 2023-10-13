@@ -12,7 +12,7 @@ public class Projectile {
         direction = direct;
         life = 10;
 
-        Coordinate coordinates = tile.getCoords();
+        Coordinate coordinates = tile.getCoordinates();
         coordinates.setCoordinates(x, y);
     }
 
@@ -24,25 +24,14 @@ public class Projectile {
     }
 
     public void step() {
-        Coordinate coordinates = tile.getCoords();
+        Coordinate coordinates = tile.getCoordinates();
         int x = coordinates.getX();
         int y = coordinates.getY();
         switch (direction) {
-            case "up": {
-                y -= 2;
-                break;
-            }
-            case "left": {
-                x -= 2;
-                break;
-            }
-            case "down": {
-                y += 2;
-                break;
-            }
-            case "right": {
-                x += 2;
-            }
+            case "up" -> y -= 2;
+            case "left" -> x -= 2;
+            case "down" -> y += 2;
+            case "right" -> x += 2;
         }
         if (x > upperXBound) {
             x = lowerXBound + (x - upperXBound);

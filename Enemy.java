@@ -5,12 +5,12 @@ public class Enemy {
 
     public Enemy(int x, int y) {
         tile = new Tile("🟥");
-        Coordinate coordinates = tile.getCoords();
+        Coordinate coordinates = tile.getCoordinates();
         coordinates.setCoordinates(x, y);
     }
 
     public void step(ArrayList<Enemy> otherEnemies, int playerX, int playerY) {
-        Coordinate enemyCoordinates = tile.getCoords();
+        Coordinate enemyCoordinates = tile.getCoordinates();
         int x = enemyCoordinates.getX();
         int y = enemyCoordinates.getY();
         int newX = x;
@@ -39,7 +39,7 @@ public class Enemy {
             if (otherEnemy == this) {
                 continue;
             }
-            Coordinate otherCoordinate = otherEnemy.getTile().getCoords();
+            Coordinate otherCoordinate = otherEnemy.getTile().getCoordinates();
             int otherX = otherCoordinate.getX();
             int otherY = otherCoordinate.getY();
             for (Integer moveIdx: moves) {

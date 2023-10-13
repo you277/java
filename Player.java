@@ -19,25 +19,14 @@ public class Player {
     }
 
     public void step() {
-        Coordinate coordinates = tile.getCoords();
+        Coordinate coordinates = tile.getCoordinates();
         int x = coordinates.getX();
         int y = coordinates.getY();
         switch (direction) {
-            case "up": {
-                y--;
-                break;
-            }
-            case "left" : {
-                x--;
-                break;
-            }
-            case "down": {
-                y++;
-                break;
-            }
-            case "right": {
-                x++;
-            }
+            case "up" -> y--;
+            case "left" -> x--;
+            case "down" -> y++;
+            case "right" -> x++;
         }
         if (x > upperYBound) {
             x = lowerXBound;

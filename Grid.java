@@ -26,7 +26,7 @@ public class Grid {
     private Tile getTopTileCharacter(ArrayList<Tile> tiles, int posX, int posY) {
         Tile currentTile = backgroundTile;
         for (Tile tile: tiles) {
-            Coordinate tileCoordinates = tile.getCoords();
+            Coordinate tileCoordinates = tile.getCoordinates();
             int x = tileCoordinates.getX();
             int y = tileCoordinates.getY();
             if (posX != x || posY != y) {

@@ -8,7 +8,7 @@ public class Tile {
         coordinate = new Coordinate();
     }
 
-    public Coordinate getCoords() {
+    public Coordinate getCoordinates() {
         return coordinate;
     }
 
