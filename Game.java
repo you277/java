@@ -34,9 +34,7 @@ public class Game {
     }
 
     void stepEnemies() {
-        if (currentStep % enemyMovePeriod != 0) {
-            return;
-        }
+        if (currentStep % enemyMovePeriod != 0) return;
         Coordinate playerCoordinates = player.getTile().getCoordinates();
         int x = playerCoordinates.getX();
         int y = playerCoordinates.getY();
@@ -44,6 +42,7 @@ public class Game {
             enemy.step(enemies, x, y);
         }
     }
+
     void stepProjectiles() {
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for (Projectile projectile: projectiles) {
@@ -61,9 +60,7 @@ public class Game {
     }
 
     void processProjectileCollisions() {
-        if (projectiles.size() == 0 || enemies.size() == 0) {
-            return;
-        }
+        if (projectiles.size() == 0 || enemies.size() == 0) return;
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
         for (Projectile projectile: projectiles) {
@@ -79,9 +76,7 @@ public class Game {
                 }
             }
         }
-        if (enemiesToRemove.size() == 0) {
-            return;
-        }
+        if (enemiesToRemove.size() == 0) return;
         for (Projectile projectile: projectilesToRemove) {
             projectiles.remove(projectile);
         }
@@ -104,9 +99,7 @@ public class Game {
     }
 
     void spawnEnemies() {
-        if (currentStep % enemySpawnPeriod != 0) {
-            return;
-        }
+        if (currentStep % enemySpawnPeriod != 0) return;
 
         Coordinate playerCoordinates = player.getTile().getCoordinates();
         int x = playerCoordinates.getX();
@@ -121,10 +114,7 @@ public class Game {
             yOffset *= -1;
         }
 
-        Enemy enemy = new Enemy(
-                x + xOffset,
-                y + yOffset
-        );
+        Enemy enemy = new Enemy(x + xOffset, y + yOffset);
         enemies.add(enemy);
     }
 
@@ -188,13 +178,11 @@ public class Game {
 
                                                                                         """
         );
-
-        String input;
         while (true) {
             System.out.println("\nbegin (y/n)");
-            input = s.nextLine();
+            String input = s.nextLine();
             if (input.equals("y") || input.equals("n")) {
-                break;
+                return input.equals("y");
             } else {
                 if (input.equals("y/n")) {
                     System.out.println("oh you think ur so funny");
@@ -203,7 +191,6 @@ public class Game {
                 }
             }
         }
-        return input.equals("y");
     }
 
     void onLose() {
@@ -212,7 +199,7 @@ public class Game {
     }
 
     public void doGame() {
-        if (alive) { return; }
+        if (alive) return;
         alive = true;
 
         player = new Player();

@@ -8,12 +8,9 @@ public class Projectile {
     private int upperYBound;
 
     public Projectile(int x, int y, String direct) {
-        tile = new Tile("⬜");
+        tile = new Tile("⬜", x, y);
         direction = direct;
         life = 10;
-
-        Coordinate coordinates = tile.getCoordinates();
-        coordinates.setCoordinates(x, y);
     }
 
     public void setBounds(int lowerX, int upperX, int lowerY, int upperY) {

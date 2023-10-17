@@ -4,9 +4,7 @@ public class Enemy {
     private Tile tile = null;
 
     public Enemy(int x, int y) {
-        tile = new Tile("🟥");
-        Coordinate coordinates = tile.getCoordinates();
-        coordinates.setCoordinates(x, y);
+        tile = new Tile("🟥", x, y);
     }
 
     public void step(ArrayList<Enemy> otherEnemies, int playerX, int playerY) {

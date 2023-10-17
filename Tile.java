@@ -8,6 +8,11 @@ public class Tile {
         coordinate = new Coordinate();
     }
 
+    public Tile(String tileChar, int initX, int initY) {
+        character = tileChar;
+        coordinate = new Coordinate(initX, initY);
+    }
+
     public Coordinate getCoordinates() {
         return coordinate;
     }
