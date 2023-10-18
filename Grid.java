@@ -55,7 +55,6 @@ public class Grid {
             }
             art.append("\n");
         }
-        //return art;
         return art.toString();
     }
 
