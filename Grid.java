@@ -41,7 +41,7 @@ public class Grid {
     }
 
     public String getGridArt(ArrayList<Tile> tiles) {
-        String art = "";
+        StringBuilder art = new StringBuilder();
         int trueCenterX = 0;
         int trueCenterY = 0;
         if (respectSetCenter) {
@@ -51,11 +51,12 @@ public class Grid {
         for (int y = trueCenterY - top; y < trueCenterY + bottom + 1; y++) {
             for (int x = trueCenterX - left; x < trueCenterX + right + 1; x++) {
                 Tile tile = getTopTileCharacter(tiles, x, y);
-                art += tile;
+                art.append(tile);
             }
-            art += "\n";
+            art.append("\n");
         }
-        return art;
+        //return art;
+        return art.toString();
     }
 
     public void setCenter(int x, int y) {
