@@ -24,6 +24,10 @@ public class Game {
         if (alive) {
             tiles.add(player.getTile());
         }
+        Coordinate playerCoordinates = player.getTile().getCoordinates();
+        int x = playerCoordinates.getX();
+        int y = playerCoordinates.getY();
+        grid.setCenter(x, y);
         System.out.println(grid.getGridArt(tiles));
         if (scoreExceededIntMax) {
             System.out.println("score: how");
@@ -198,6 +202,9 @@ public class Game {
         if (alive) return;
         alive = true;
 
+        System.out.println("do centered mode? (y/n):");
+        String doCenteredMode = s.nextLine();
+
         player = new Player();
         grid = new Grid();
         enemies = new ArrayList<>();
@@ -207,7 +214,7 @@ public class Game {
         enemySpawnPeriod = 3;
         enemyMovePeriod = 2;
 
-        Grid.setRespectCenter(false);
+        Grid.setRespectCenter(doCenteredMode.equals("y"));
         player.setBounds(-10, 10, -10, 10);
 
         while (alive) {
