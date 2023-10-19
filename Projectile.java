@@ -9,6 +9,7 @@ public class Projectile {
 
     public Projectile(int x, int y, String direct) {
         tile = new Tile("⬜", x, y);
+        tile.setLayer(0);
         direction = direct;
         life = 10;
     }

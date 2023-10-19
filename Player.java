@@ -8,6 +8,7 @@ public class Player {
 
     public Player() {
         tile = new Tile("🟨");
+        tile.setLayer(1);
         direction = "up";
     }
 

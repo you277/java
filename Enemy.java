@@ -5,6 +5,7 @@ public class Enemy {
 
     public Enemy(int x, int y) {
         tile = new Tile("🟥", x, y);
+        tile.setLayer(2);
     }
 
     public void step(ArrayList<Enemy> otherEnemies, int playerX, int playerY) {

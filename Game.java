@@ -26,7 +26,7 @@ public class Game {
         }
         System.out.println(grid.getGridArt(tiles));
         if (scoreExceededIntMax) {
-            System.out.println("score: bruh");
+            System.out.println("score: how");
         } else {
             System.out.println("score: " + score);
         }
@@ -190,8 +190,8 @@ public class Game {
     }
 
     void onLose() {
-        System.out.println("womp womp");
-        System.out.println("final score: " + score);
+        System.out.println("\nwomp womp");
+        System.out.println("\nfinal score: " + score);
     }
 
     public void doGame() {
@@ -202,6 +202,7 @@ public class Game {
         grid = new Grid();
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
+        score = 0;
         currentStep = 0;
         enemySpawnPeriod = 3;
         enemyMovePeriod = 2;
